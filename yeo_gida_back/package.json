@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/21yuyu99/yeo_gi_da/issues"
   },
-  "homepage": "https://github.com/21yuyu99/yeo_gi_da#readme"
+  "homepage": "https://github.com/21yuyu99/yeo_gi_da#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
