@@ -40,15 +40,12 @@ export default function Home() {
     <div>Menu1</div>
   </nav>
     </Div>
+    // <HomeContainer>
+    //   {/* <Image src={main_back_image} alt="" fill/> */}
+    //   <Ex></Ex>
+    // </HomeContainer>
   )
 }
 const Div = styled.div`
 // position:relative;
-// background-image : url(/img/main_back_image.jpg);
-// background-repeat : no-repeat;
-// background-size : 100% 100%;
-// background-position: center;  
-// width:100vw;
-// height:100vh;
-// position:fixed;
 `

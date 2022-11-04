@@ -8,7 +8,7 @@ export const Layout = (props:{children:React.ReactNode}) => {
     <Text>
     <BackImage>
       <Header/>
-    </BackImage>
+      </BackImage>
     </Text>
       <Main>
         {props.children}
@@ -17,6 +17,7 @@ export const Layout = (props:{children:React.ReactNode}) => {
   )
 }
 const BackImage = styled.div`
+
 white-space : nowrap;
 width:100vw;
 height:100vh;
