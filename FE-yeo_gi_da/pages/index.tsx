@@ -5,47 +5,24 @@ import main_back_image from "../assets/images/main_back_image.jpg"
 import { Header } from '../components/layout/Header'
 export default function Home() {
   return (
-    <Div>
-     <nav>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-    <div>Menu1</div>
-  </nav>
-    </Div>
-    // <HomeContainer>
-    //   {/* <Image src={main_back_image} alt="" fill/> */}
-    //   <Ex></Ex>
-    // </HomeContainer>
+  <>
+    <BackWrapper>
+      <BackImage/>    
+    </BackWrapper>
+  </>
   )
 }
-const Div = styled.div`
-// position:relative;
+
+const BackImage = styled.div`
+white-space : nowrap;
+width:100vw;
+height:100vh;
+background-image : url(/img/main_back_image.png);
+background-repeat : no-repeat;
+background-size : 100% 100%;
+background-position: center;  
+}
+`
+const BackWrapper = styled.div`
+position:fixed;
 `
