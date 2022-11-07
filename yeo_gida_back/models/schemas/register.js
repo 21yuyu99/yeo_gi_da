@@ -3,6 +3,10 @@ var models = require('..');
 
 var fs = require('fs');
 
+const multer = require('multer');
+const upload = multer({dest: './upload'})
+
+
 module.exports = ((sequelize, DataTypes) => {
 
     var schema = sequelize.define('register', {
