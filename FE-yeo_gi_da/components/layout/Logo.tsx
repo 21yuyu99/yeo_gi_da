@@ -21,7 +21,7 @@ display:inline-block;
 position : relative;
 border-radius : 5px 0;
 ${props => props.position =='top'?`
-border-width: 2.5px 0 0 2.5px; bottom:10px; left:0px; box-shadow: -2px -2px 3px -1.5px grey;`:`border-width: 0px 2.5px 2.5px 0; top:15px;right:15px; box-shadow: 2px 2px 3px -1.5px grey;`}
+border-width: 2.5px 0 0 2.5px; bottom:10px; left:0px; box-shadow: -2px -2px 3px -1.5px grey;`:`border-width: 0px 2.5px 2.5px 0; top:20px;right:15px; box-shadow: 2px 2px 3px -1.5px grey;`}
 `
 
 export const LogoTitle = styled.span`

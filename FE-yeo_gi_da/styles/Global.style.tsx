@@ -4,13 +4,17 @@ const GlobalStyle = createGlobalStyle`
   font-family: "YeonSung";
   src: url(/fonts/YeonSung-Regular.ttf);
 }
-@font-face {
-  font-family: "GowunBatang";
-  src: url(/fonts/GowunBatang-Regular.ttf);
-}
 @font-face{
   font-family:"NotoSan";
   src : url(/fonts//NotoSansKR-Medium.otf);
+}
+@font-face{
+  font-family:"GowunBatang";
+  src : url(/fonts//GowunBatang-Regular.ttf);
+}
+@font-face{
+  font-family:"Nanum";
+  src : url(/fonts//NanumBrushScript-Regular.ttf);
 }
 html,body{
   padding:0;

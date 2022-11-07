@@ -47,7 +47,8 @@ display:flex;
 width:100%;
 position:fixed;
 justify-content:space-around;
-margin-top:2%;
+padding-top:2%;
 white-space : nowrap;
 z-index:1;
+padding-bottom:2%;
 `
