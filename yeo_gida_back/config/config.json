@@ -13,6 +13,7 @@
       "host": "45.120.69.220",
       "dialect": "mysql"
     },
+
     "production": {
       "username": "root",
       "password": "9kLCdhGBGGbs09hHI",

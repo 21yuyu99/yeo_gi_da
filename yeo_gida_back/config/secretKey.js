@@ -3,6 +3,6 @@ module.exports = {
     option: {
         algorithm: "HS256",
         expiresIn: "7d",
-        issuer: "OneCue"
+        issuer: "YeoGiDa"
     }
 }
