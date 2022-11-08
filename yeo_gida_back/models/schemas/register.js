@@ -37,6 +37,11 @@ module.exports = ((sequelize, DataTypes) => {
             type: Sequelize.TEXT,
             allowNull : false,
         },
+
+        cate:{
+            type: Sequelize.TEXT.apply,
+            allowNull : false,
+        }
     },  {
         
             timestamps: true,
