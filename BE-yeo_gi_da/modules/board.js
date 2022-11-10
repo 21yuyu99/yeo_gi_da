@@ -11,7 +11,7 @@ function create(_name,_picture,_intro,_category,_tip,_location){
         models.board.create({
             travel_name: _name,
             travel_picture: _picture,
-            trave_intro: _intro,
+            travel_intro: _intro,
             travel_category: _category,
             travel_tip: _tip,
             travel_location: _location,
