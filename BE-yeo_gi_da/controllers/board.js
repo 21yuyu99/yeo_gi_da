@@ -8,8 +8,7 @@ function create(req,res,next){
     else if (typeof(req.body.name) !== 'string') return res.send(message['404_BAD_REQUEST'])
 
 
-    if (req.body.picture == null) return res.send(message['404_NOT_FOUND'])
-    else if (typeof(req.body.picture) !== 'string') return res.send(message['404_BAD_REQUEST'])
+   
 
     if (req.body.intro == null) return res.send(message['404_NOT_FOUND'])
     else if (typeof(req.body.intro) !== 'string') return res.send(message['404_BAD_REQUEST'])
@@ -20,7 +19,6 @@ function create(req,res,next){
     if (req.body.tip == null) return res.send(message['404_NOT_FOUND'])
     else if (typeof(req.body.tip) !== 'string') return res.send(message['404_BAD_REQUEST'])
 
-    console.log(1111111)
     createModule.create(req.body.name,req.body.picture,req.body.intro,req.body.category,req.body.tip,req.body.location).then(response => {
         return res.status(response.status).send(response)
     }).catch(error => {

@@ -7,7 +7,6 @@ function create(_name,_picture,_intro,_category,_tip,_location){
 
     return new Promise((resolve,reject)=>{
 
-
         models.board.create({
             travel_name: _name,
             travel_picture: _picture,

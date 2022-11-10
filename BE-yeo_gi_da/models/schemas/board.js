@@ -9,7 +9,7 @@ module.exports = ((sequelize, DataTypes) => {
             allowNull: false,
         },
         travel_picture:{
-            type: Sequelize.TEXT,
+            type: Sequelize.BLOB,
             allowNull: false,
         },
         travel_intro: {

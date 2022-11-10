@@ -1,12 +1,13 @@
 const express = require('express')
 const app = express()
+
 const port = 3030
 process.env.TZ = "Asia/Seoul"
 
 const cors = require('cors')
 
 app.use(cors())
-
+app.unsubscribe('/')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
