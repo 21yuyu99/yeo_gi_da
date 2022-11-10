@@ -4,23 +4,27 @@ var models = require('..');
 module.exports = ((sequelize, DataTypes) => {
 
     var schema = sequelize.define('board', {
-        travel_destination_name: {
+        travel_name: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
-        travel_destination_detail: {
+        travel_picture:{
             type: Sequelize.TEXT,
             allowNull: false,
         },
-        travel_destination_category: {
+        travel_intro: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+        travel_category: {
             type: Sequelize.TEXT,
             allowNull: false
         },
-        travel_destination_tip: {
+        travel_tip: {
             type: Sequelize.TEXT,
             allowNull: false
         },
-        travel_destination_location: {
+        travel_location: {
             type: Sequelize.TEXT,
             allowNull: false
         }
