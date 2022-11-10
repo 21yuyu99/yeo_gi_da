@@ -3,24 +3,24 @@ var models = require('..');
 
 module.exports = ((sequelize, DataTypes) => {
 
-    var schema = sequelize.define('board', {
-        travel_name: {
+    var schema = sequelize.define('category', {
+        region: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
-        travel_picture:{
+        withWho:{
             type: Sequelize.TEXT,
             allowNull: false,
         },
-        travel_intro: {
+        transportation: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
-        travel_tip: {
+        scenery: {
             type: Sequelize.TEXT,
             allowNull: false
         },
-        travel_location: {
+        mood: {
             type: Sequelize.TEXT,
             allowNull: false
         }
@@ -32,7 +32,7 @@ module.exports = ((sequelize, DataTypes) => {
     });
     
     schema.associate = models => {
-        models.board.belongsTo(models.category, {
+        models.category.hasMany(models.board, {
             foreignKey: 'category_id',
             onDelete: "CASCADE",
         })
