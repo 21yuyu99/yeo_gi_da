@@ -49,6 +49,6 @@ position:fixed;
 justify-content:space-around;
 padding-top:2%;
 white-space : nowrap;
-z-index:1;
+z-index:2;
 padding-bottom:2%;
 `
