@@ -6,11 +6,8 @@ export const Footer = () => {
       <BatteryImg>
         <Image src="/img/battery.svg" alt="" width={60} height={30}/>
       </BatteryImg>
-      <FooterText>Copyright 2022,여기다 All rights reserved.</FooterText>
+      {/* <FooterText>Copyright 2022,여기다 All rights reserved.</FooterText> */}
     </>
-
-
-    
   )
 }
 const BatteryImg = styled.div`
@@ -28,7 +25,4 @@ text-align:center;
 margin-bottom:15px;
 position:fixed;
 bottom:0;
-`
-const Test = styled.div`
-min-height:100%;
 `

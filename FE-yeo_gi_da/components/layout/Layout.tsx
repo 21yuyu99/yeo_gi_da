@@ -16,4 +16,5 @@ export const Layout = (props:{children:React.ReactNode}) => {
 
 const Main = styled.main`
 z-index:2;
+
 `
