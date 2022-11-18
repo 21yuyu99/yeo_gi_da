@@ -5,17 +5,30 @@ import { CategoryStyle } from '../components/Category.style';
 const Register = () => {
   const [title,setTitle] = useState("");
   const [explain,setExplain] = useState("");
-  const [AllImage,setAllImage] = useState<File[]>([]);
+  const [allImage,setAllImage] = useState<File[]>([]);
+  const [tip,setTip] = useState("");
+  const [allHashtag,setAllHashtag] = useState<string[]>([]);
+  const [singleTag,setSingleTag] = useState("");
 
   function imageHandler(e:ChangeEvent<HTMLInputElement>){
   if (!e.target.files) return;
     const newImage = e.target.files[0];
-    setAllImage(()=>([...AllImage,newImage]));
+    setAllImage(()=>([...allImage,newImage]));
   }
 
   const removeImg = (inx:number) => {
-    setAllImage(AllImage.filter(image=>AllImage.indexOf(image)!=inx))
+    setAllImage(allImage.filter(image=>allImage.indexOf(image)!=inx))
   }
+  const removeTag = (inx:number) => {
+    setAllHashtag(allHashtag.filter(tag=>allHashtag.indexOf(tag)!=inx))
+  }
+  const keyUpHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key ==='Enter'){
+      setAllHashtag(()=>([...allHashtag,singleTag]));
+      setSingleTag("");
+    }
+  }
+
   return(
     <>
       <BackWrapper>
@@ -37,11 +50,11 @@ const Register = () => {
               <InputImg type="file" id="uploadImg" onChange={imageHandler}/>
               </ImageButtonContainer>
               <AllImageTitle>
-                {AllImage.map(image=>{
+                {allImage.map(image=>{
                   return(
-                    <SingleImageContainer key={AllImage.indexOf(image)}>
+                    <SingleImageContainer key={allImage.indexOf(image)}>
                       <Imagename >{image.name}</Imagename>
-                      <RemoveImage onClick={()=>removeImg(AllImage.indexOf(image))}><CiCircleRemove/></RemoveImage>
+                      <RemoveImage onClick={()=>removeImg(allImage.indexOf(image))}><CiCircleRemove/></RemoveImage>
                     </SingleImageContainer>
                 )})}
               </AllImageTitle>
@@ -58,7 +71,24 @@ const Register = () => {
             <CategoryStyle/>
           </SingleList>
         </RegisterLists>
-        
+        <SingleList>
+          <RegisterSubtitle>나만 알고 있는 여행 꿀팁</RegisterSubtitle>
+          <InputText type="text" value={tip} onChange={e=>setTip(e.target.value)}/>
+        </SingleList>
+        <SingleList>
+          <RegisterSubtitle>해시태그</RegisterSubtitle>
+          <AllTagBox>
+            {allHashtag.map(tag=>{return(
+              <SingleTagBox key={tag}>
+                <TagName>{tag}</TagName>
+                <RemoveTag onClick={()=>removeTag(allHashtag.indexOf(tag))}><CiCircleRemove/></RemoveTag>
+              </SingleTagBox>
+            )
+          }
+              )}
+            <InputTag type="hashtag" value = {singleTag} onKeyUp={e=>keyUpHandler(e)} onChange={e=>setSingleTag(e.target.value)} placeholder="태그를 입력하세요"/>
+          </AllTagBox>
+        </SingleList>
         <ApplyButton>등록하기</ApplyButton>
       </RegisterContainer>
     </>
@@ -102,6 +132,7 @@ padding:0;
 `
 
 const SingleList = styled.li`
+list-style:none;
 `
 
 const RegisterSubtitle = styled.div`
@@ -112,10 +143,11 @@ font-weight:600;
 
 const InputText = styled.input`
 width:60%;
-height:1.2rem;
+height:2rem;
 border:none;
-padding: .5em .75em;
-border-radius: .25em;
+padding: .5rem .75rem;
+border-radius: .25rem;
+font-size:0.8rem;
 `
 const InputImg = styled.input`
 width: 1px;
@@ -165,4 +197,37 @@ margin-bottom:20px;
 color:white;
 border-radius: .25em;
 margin-left:90%;
+`
+const AllTagBox = styled.div`
+display:flex;
+background-color:white;
+width:fit-content;
+min-width:60%;
+margin:0 20%;
+min-height:2rem;
+border:none;
+padding: .5rem .75rem;
+border-radius: .25rem;
+font-size:0.8rem;
+line-height:0.8rem;
+
+`
+const InputTag = styled.input`
+width:20%;
+`
+const SingleTagBox = styled.div`
+display:flex; 
+vertical-aling:middle;
+background-color:rgba(222, 69, 69, 0.5);
+border-radius: .25rem;
+margin-right:5px;
+`
+const RemoveTag = styled.div`
+margin:auto 5px;
+>svg{
+}
+`
+
+const TagName = styled.div`
+margin:auto 0;
 `

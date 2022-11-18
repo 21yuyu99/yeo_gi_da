@@ -16,6 +16,9 @@ const GlobalStyle = createGlobalStyle`
   font-family:"Nanum";
   src : url(/fonts//NanumBrushScript-Regular.ttf);
 }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 html,body{
   padding:0;
   margin:0;
@@ -25,6 +28,10 @@ html,body{
   position:relative;
   width:100%;
   height:100%;
+}
+a{
+  text-decoration-line:none;
+  color:black;
 }
 `
 export default GlobalStyle;
