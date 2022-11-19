@@ -63,14 +63,44 @@ function showDetail(_board_id) {
     })
 }
 
-function getBoardList(){
+function createComment(_board_id, _content){
+    return new Promise((resolve,reject)=>{
+        models.comment.create({
+            board_id: _board_id,
+            content: _content,
+        }).then(response => {
+            if (response != null) return resolve(message['200_OK'])
+            else return reject(message['500_INTERNAL_SERVER_ERROR'])
+        }).catch(error => {
+            return reject(message['500_INTERNAL_SERVER_ERROR'])
+        })
+    }).catch(error => {
+        return reject(error)
+    })
+}
+
+function getComment(_board_id){
     return new Promise((resolve, reject) => {
-        
+        models.comment.fineOne({
+            where: {
+                board_id: _board_id
+            }
+        }).then(response => {
+            if (response != null){
+                var successObj = Object.assign({}, message['200_OK'])
+                successObj.comment = response.dataValues
+                return resolve(successObj)
+            }
+            else return reject(message['404_NOT_FOUND'])
+        }).catch(error => {
+            return reject(message['500_INTERNAL_SERVER_ERROR'])
+        })
     })
 }
 
 module.exports = {
     create,
     showDetail,
-    getBoardList
+    createComment,
+    getComment,
 }
