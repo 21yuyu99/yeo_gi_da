@@ -58,6 +58,7 @@ function showDetail(_board_id) {
             }
             else return reject(message['404_NOT_FOUND'])
         }).catch(error => {
+            console.log(error)
             return reject(message['500_INTERNAL_SERVER_ERROR'])
         })
     })
@@ -81,7 +82,7 @@ function createComment(_board_id, _content){
 
 function getComment(_board_id){
     return new Promise((resolve, reject) => {
-        models.comment.fineOne({
+        models.comment.findOne({
             where: {
                 board_id: _board_id
             }

@@ -36,12 +36,11 @@ module.exports = ((sequelize, DataTypes) => {
             foreignKey: 'category_id',
             onDelete: "CASCADE",
         })
-    };
-    schema.associate = models => {
         models.board.hasMany(models.comment, {
             foreignKey: 'board_id',
             onDelete: "CASCADE",
         })
     };
+
     return schema;
 })
