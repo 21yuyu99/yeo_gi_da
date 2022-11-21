@@ -2,6 +2,7 @@ import { ChangeEvent, ReactNode, useCallback, useEffect, useRef, useState } from
 import {CiCircleRemove} from 'react-icons/ci';
 import styled from 'styled-components'
 import { CategoryStyle } from '../components/Category.style';
+import PostRegister from './api/useRegister';
 const Register = () => {
   const [title,setTitle] = useState("");
   const [explain,setExplain] = useState("");
@@ -9,7 +10,7 @@ const Register = () => {
   const [tip,setTip] = useState("");
   const [allHashtag,setAllHashtag] = useState<string[]>([]);
   const [singleTag,setSingleTag] = useState("");
-
+  const [location,setLocation] = useState("");
   function imageHandler(e:ChangeEvent<HTMLInputElement>){
   if (!e.target.files) return;
     const newImage = e.target.files[0];
@@ -28,7 +29,16 @@ const Register = () => {
       setSingleTag("");
     }
   }
-
+  const handleRegister = () => {
+    const formData = new FormData();
+    formData.append('name',title),
+    allImage.map(image=>
+      formData.append('picture',image),
+      );
+    formData.append('intro',explain),
+    formData.append('location',location)
+    //PostRegister(title,allImage,explain,tip,location,category);
+  }
   return(
     <>
       <BackWrapper>
@@ -41,6 +51,10 @@ const Register = () => {
           <SingleList>
             <RegisterSubtitle>여행지 제목</RegisterSubtitle>
             <InputText type="text" value={title} onChange={e=>setTitle(e.target.value)}/>
+          </SingleList>
+          <SingleList>
+            <RegisterSubtitle>여행지 주소</RegisterSubtitle>
+            <InputText type="text" value={location} onChange={e=>setLocation(e.target.value)}/>
           </SingleList>
           <SingleList>
             <RegisterSubtitle>여행지 사진</RegisterSubtitle> 
@@ -83,13 +97,11 @@ const Register = () => {
                 <TagName>{tag}</TagName>
                 <RemoveTag onClick={()=>removeTag(allHashtag.indexOf(tag))}><CiCircleRemove/></RemoveTag>
               </SingleTagBox>
-            )
-          }
-              )}
+            )})}
             <InputTag type="hashtag" value = {singleTag} onKeyUp={e=>keyUpHandler(e)} onChange={e=>setSingleTag(e.target.value)} placeholder="태그를 입력하세요"/>
           </AllTagBox>
         </SingleList>
-        <ApplyButton>등록하기</ApplyButton>
+        <ApplyButton onClick={()=>handleRegister}>등록하기</ApplyButton>
       </RegisterContainer>
     </>
   )
