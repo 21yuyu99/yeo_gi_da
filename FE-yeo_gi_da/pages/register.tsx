@@ -33,20 +33,6 @@ const Register = () => {
       setSingleTag("");
     }
   }
-  const handleRegister = () => { 
-    const formData = new FormData();
-    formData.append('name',title),
-    allImage.map(image=>
-      formData.append('picture',image),
-      );
-    formData.append('intro',explain);
-    formData.append('location',location);
-    // let temp = {}
-    //  region.map(
-    //   x => x.checked==true?
-    // );
-    //PostRegister(title,allImage,explain,tip,location,category);
-  }
   const [withWho,setWho] = useState<checkType[]>([
     {
       text : '가족',
@@ -171,6 +157,58 @@ setState(
       state.indexOf(x) === inx ? { ...x, checked: !x.checked } : x
   )
 )
+}
+const handleRegister = () => { 
+  // const formData = new FormData();
+  // formData.append('name',title),
+  // allImage.map(image=>
+  //   formData.append('picture',image),
+  //   );
+  // formData.append('intro',explain);
+  // formData.append('location',location);
+  // let temp = "";
+  // for(let i=0;i<region.length;i++){
+  //   if(region[i].checked===true){
+  //     temp = region[i].text;
+  //     break;
+  //   }
+  // }
+  // formData.append('region',temp);
+
+  // for(let i=0;i<withWho.length;i++){
+  //   if(withWho[i].checked===true){
+  //     temp = withWho[i].text;
+  //     break;
+  //   }
+  // }
+  // formData.append('withWho',temp);
+  
+  // for(let i=0;i<ride.length;i++){
+  //   if(ride[i].checked===true){
+  //     temp = ride[i].text;
+  //     break;
+  //   }
+  // }
+  // formData.append('transportation',temp);
+
+  // for(let i=0;i<scenery.length;i++){
+  //   if(scenery[i].checked===true){
+  //     temp = scenery[i].text;
+  //     break;
+  //   }
+  // }
+  // formData.append('scenery',temp);
+
+  // for(let i=0;i<mood.length;i++){
+  //   if(mood[i].checked===true){
+  //     temp = mood[i].text;
+  //     break;
+  //   }
+  // }
+  // formData.append('mood',temp);
+  // PostRegister(formData);
+  // PostRegister("hi",allImage[0],"j","k","k","ds","sd","ad","asd","sdf");
+  PostRegister();
 }
   return(
     <>
@@ -345,7 +383,7 @@ setState(
             <InputTag type="hashtag" value = {singleTag} onKeyUp={e=>keyUpHandler(e)} onChange={e=>setSingleTag(e.target.value)} placeholder="태그를 입력하세요"/>
           </AllTagBox>
         </SingleList>
-        <ApplyButton onClick={()=>handleRegister}>등록하기</ApplyButton>
+        <ApplyButton onClick={()=>handleRegister()}>등록하기</ApplyButton>
       </RegisterContainer>
     </>
   )
