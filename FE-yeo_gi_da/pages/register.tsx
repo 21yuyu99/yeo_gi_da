@@ -1,8 +1,11 @@
-import { ChangeEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import {CiCircleRemove} from 'react-icons/ci';
 import styled from 'styled-components'
-import { CategoryStyle } from '../components/Category.style';
-import PostRegister from './api/useRegister';
+import { AllCategoryConatainer, CategoryLabel,CategoryTitle, InputSubCategory, SingleCategoryContainer } from '../components/Category.style';
+import { RegisterContainer, RegisterTitle, RegisterLists, SingleList, RegisterSubtitle, InputText, ImgBox, ImageButtonContainer, InputImg, AllImageTitle, SingleImageContainer, Imagename, RemoveImage, AllTagBox, SingleTagBox, TagName, RemoveTag, InputTag, ApplyButton } from '../components/Register.style';
+import { checkType } from '../types/checkType';
+import PostRegister from './api/PostRegister';
+
 const Register = () => {
   const [title,setTitle] = useState("");
   const [explain,setExplain] = useState("");
@@ -11,6 +14,7 @@ const Register = () => {
   const [allHashtag,setAllHashtag] = useState<string[]>([]);
   const [singleTag,setSingleTag] = useState("");
   const [location,setLocation] = useState("");
+  
   function imageHandler(e:ChangeEvent<HTMLInputElement>){
   if (!e.target.files) return;
     const newImage = e.target.files[0];
@@ -29,23 +33,151 @@ const Register = () => {
       setSingleTag("");
     }
   }
-  const handleRegister = () => {
+  const handleRegister = () => { 
     const formData = new FormData();
     formData.append('name',title),
     allImage.map(image=>
       formData.append('picture',image),
       );
-    formData.append('intro',explain),
-    formData.append('location',location)
+    formData.append('intro',explain);
+    formData.append('location',location);
+    // let temp = {}
+    //  region.map(
+    //   x => x.checked==true?
+    // );
     //PostRegister(title,allImage,explain,tip,location,category);
   }
+  const [withWho,setWho] = useState<checkType[]>([
+    {
+      text : '가족',
+      checked : false,
+    },
+     {
+       text : '친구',
+       checked : false,
+      },
+      {
+        text : '연인',
+        checked : false,
+      },
+      {
+        text : '혼자',
+        checked : false,
+      },
+      {
+        text:'반려동물',
+      checked : false,
+    }
+  ]);
+    
+  const [ride,setRide] = useState<checkType[]>([
+    {
+      text : '뚜벅이',
+      checked : false,
+    },
+     {
+       text : '차타고',
+       checked : false,
+      },
+]);
+
+const [scenery,setScenery] = useState<checkType[]>([
+  {
+    text : '바다',
+    checked : false,
+  },
+   {
+     text : '산',
+     checked : false,
+    },
+    {
+      text : '기타/상관없음',
+      checked : false,
+    },
+]);  
+const [mood,setMood] = useState<checkType[]>([
+  {
+    text : '힐링',
+    checked : false,
+  },
+   {
+     text : '액티비티',
+     checked : false,
+    },
+    {
+      text : '모던한',
+      checked : false,
+    },
+    {
+      text : '컨트리한',
+      checked : false,
+    },
+     {
+       text : '사진명소',
+       checked : false,
+      },
+      {
+        text : '핫플레이스',
+        checked : false,
+      },
+    ]);
+  
+  const [region, setRegion] = useState<checkType[]>([
+    {
+      text: '수도권 근교',
+      checked: false
+    },
+    {
+      text: '경기도',
+      checked: false
+    },
+    {
+      text: '강원도',
+      checked: false
+    },
+    {
+      text: '경상도',
+      checked: false
+    },
+    {
+      text: '충청도',
+      checked: false
+    },
+    {
+      text: '전라도',
+      checked: false
+    },
+    {
+      text: '제주도',
+      checked: false
+    }
+  ]);
+
+const onCheckHandler = (state: {
+text: string;
+checked: boolean;
+}[],
+setState: Dispatch<SetStateAction<{
+  text: string;
+  checked: boolean;
+}[]>>,
+inx: number
+) => {
+let temp = state;
+temp[inx].checked = !temp[inx].checked;
+setState(
+  state.map(
+    x =>
+      state.indexOf(x) === inx ? { ...x, checked: !x.checked } : x
+  )
+)
+}
   return(
     <>
-      <BackWrapper>
+    <BackWrapper>
       <BackImage/>    
-      </BackWrapper>
-
-      <RegisterContainer>
+    </BackWrapper>
+    <RegisterContainer>
         <RegisterTitle>여행지 등록하기</RegisterTitle>
         <RegisterLists>
           <SingleList>
@@ -82,7 +214,119 @@ const Register = () => {
 
           <SingleList>
             <RegisterSubtitle>카테고리 선택</RegisterSubtitle>
-            <CategoryStyle/>
+            <AllCategoryConatainer>
+      <SingleCategoryContainer>
+        <CategoryTitle>지역</CategoryTitle>
+        {region.map(
+          x => {
+            const inx = region.indexOf(x);
+            return (
+              <CategoryLabel key={x.text}>
+                <InputSubCategory type="checkbox" checked={region[inx].checked} onChange={() => onCheckHandler(region, setRegion, inx)} onClick={() => onCheckHandler(region, setRegion, inx)} />
+                {x.text}
+              </CategoryLabel>
+            )
+          }
+        )}
+      </SingleCategoryContainer>
+
+      <SingleCategoryContainer>
+        <CategoryTitle>누구랑</CategoryTitle>
+        {withWho.map(
+          x => {
+            const inx = withWho.indexOf(x);
+            return (
+              <CategoryLabel key={x.text}>
+                <InputSubCategory type="checkbox" checked={withWho[inx].checked} onChange={() => onCheckHandler(withWho, setWho, inx)} onClick={() => onCheckHandler(withWho, setWho, inx)} />
+                {x.text}
+              </CategoryLabel>
+            )
+          }
+        )}
+      </SingleCategoryContainer>
+      <SingleCategoryContainer>
+        <CategoryTitle>이동수단</CategoryTitle>
+        {ride.map(
+          x => {
+            const inx = ride.indexOf(x);
+            return (
+              <CategoryLabel key={x.text}>
+                <InputSubCategory type="checkbox" checked={ride[inx].checked} onChange={() => onCheckHandler(ride, setRide, inx)} onClick={() => onCheckHandler(ride, setRide, inx)} />
+                {x.text}
+              </CategoryLabel>
+            )
+          })}
+      </SingleCategoryContainer>
+      <SingleCategoryContainer>
+        <CategoryTitle>바다/산</CategoryTitle>
+        {scenery.map(
+          x => {
+            const inx = scenery.indexOf(x);
+            return (
+              <CategoryLabel key={x.text}>
+                <InputSubCategory type="checkbox" checked={scenery[inx].checked} onChange={() => onCheckHandler(scenery, setScenery, inx)} onClick={() => onCheckHandler(scenery, setScenery, inx)} />
+                {x.text}
+              </CategoryLabel>
+            )
+          })}
+      </SingleCategoryContainer>
+
+      <SingleCategoryContainer>
+        <CategoryTitle>분위기</CategoryTitle>
+        {/* <TwoOptionContainer>
+          <CategoryLabel>
+            <InputSubCategory type="checkbox" />
+            힐링
+          </CategoryLabel>
+          <CategoryLabel>
+            <InputSubCategory type="checkbox" />
+            액티비티
+          </CategoryLabel>
+        </TwoOptionContainer> */}
+      {mood.map(
+        x => {
+          const inx = mood.indexOf(x);
+          return (
+            <CategoryLabel key={x.text}>
+              <InputSubCategory type="checkbox" checked={mood[inx].checked} onChange={() => onCheckHandler(mood, setMood, inx)} onClick={() => onCheckHandler(mood, setMood, inx)} />
+              {x.text}
+            </CategoryLabel>
+          )
+        })}
+      </SingleCategoryContainer>
+
+      <SingleCategoryContainer>
+        <CategoryTitle>세부사항</CategoryTitle>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          물놀이 가능
+        </CategoryLabel>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          사람 없는
+        </CategoryLabel>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          이색 체험
+        </CategoryLabel>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          일몰/일출 명소
+        </CategoryLabel>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          낭만 있는
+        </CategoryLabel>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          트래킹
+        </CategoryLabel>
+        <CategoryLabel>
+          <InputSubCategory type="checkbox" />
+          이국적
+        </CategoryLabel>
+      </SingleCategoryContainer>
+    </AllCategoryConatainer>
           </SingleList>
         </RegisterLists>
         <SingleList>
@@ -106,7 +350,6 @@ const Register = () => {
     </>
   )
 }
-export default Register;
 
 const BackImage = styled.div`
 white-space : nowrap;
@@ -121,125 +364,4 @@ background-position: center;
 const BackWrapper = styled.div`
 position:fixed;
 `
-const RegisterContainer = styled.form`
-margin:0 10%;
-width:80%;
-text-align:center;
-position: absolute;
-top:20%;
-background-color:rgba(255, 255, 255, 0.4);
-height:80%;
-overflow: auto;
-`
-
-const RegisterTitle = styled.h2`
-font-size:1.8rem;
-`
-const RegisterLists = styled.ul`
-list-style:none;
-display:flex;
-flex-direction:column;
-justify-content: space-between;
-padding:0;
-`
-
-const SingleList = styled.li`
-list-style:none;
-`
-
-const RegisterSubtitle = styled.div`
-font-size:1.3rem;
-margin:15px;
-font-weight:600;
-`
-
-const InputText = styled.input`
-width:60%;
-height:2rem;
-border:none;
-padding: .5rem .75rem;
-border-radius: .25rem;
-font-size:0.8rem;
-`
-const InputImg = styled.input`
-width: 1px;
-height: 1px;
-`
-const ImageButtonContainer = styled.span`
->label{
-  padding: .5em .75em;
-  border-radius: .25em;
-  background-color:white; 
-  font-weight:600;
-  display:inline-block;
-  margin-right:5rem;
-}
-`
-const Imagename = styled.div`
-margin-bottom:5px;
-letter-spacing: 3px;
-font-size: 1rem;
-`
-
-const AllImageTitle = styled.div`
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-`
-const ImgBox = styled.span`
-display:flex;
-justify-content:center;
-align-items: center;
-`
-
-const RemoveImage = styled.span`
-display:block;
-margin:auto 10px;
-align-items: center;
-`
-const SingleImageContainer = styled.div`
-  display:flex;
-`
-const ApplyButton = styled.div`
-width:100px;
-height:40px;
-line-height:40px;
-background-color: rgba(222, 71, 71, 0.9);
-margin-bottom:20px;
-color:white;
-border-radius: .25em;
-margin-left:90%;
-`
-const AllTagBox = styled.div`
-display:flex;
-background-color:white;
-width:fit-content;
-min-width:60%;
-margin:0 20%;
-min-height:2rem;
-border:none;
-padding: .5rem .75rem;
-border-radius: .25rem;
-font-size:0.8rem;
-line-height:0.8rem;
-
-`
-const InputTag = styled.input`
-width:20%;
-`
-const SingleTagBox = styled.div`
-display:flex; 
-vertical-aling:middle;
-background-color:rgba(222, 69, 69, 0.5);
-border-radius: .25rem;
-margin-right:5px;
-`
-const RemoveTag = styled.div`
-margin:auto 5px;
->svg{
-}
-`
-
-const TagName = styled.div`
-margin:auto 0;
-`
+export default Register;
