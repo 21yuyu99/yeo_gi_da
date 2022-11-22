@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 import Image from 'next/image'
 export const Logo = () => {
   return(
@@ -6,7 +7,7 @@ export const Logo = () => {
   <LogoBorder position="top"/>
   {/* <Image src="/img/topLeft.png" alt="" width={50} height={40}/> */}
     <LogoTitle>
-      여기다
+      <Link href="/">여기다</Link>
     </LogoTitle>
     <LogoBorder position="bottom"/>
   </LogoContainer>
@@ -34,6 +35,7 @@ letter-spacing: 10px;
 `
 
 export const LogoContainer = styled.div`
+text-align:center;
 margin:0 25%;
 line-height:1;
 `

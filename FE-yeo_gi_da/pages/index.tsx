@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import main_back_image from "../assets/images/main_back_image.jpg"
 import { Header } from '../components/layout/Header'
+import Link from 'next/link'
 export default function Home() {
   return (
   <>
@@ -12,9 +13,9 @@ export default function Home() {
     <BodyContainer>
       <LetterText><p>너에게</p><p>특별한 여행지</p><p>우리가 찾아줄게</p></LetterText>
       <MenuContainer>
-        <RecommendMenu>여행지 추천받기</RecommendMenu>
+        <MenuName><Link href="/recommend">여행지 추천받기</Link></MenuName>
         <MenuLine/>
-        <RegisterMenu>여행지 등록</RegisterMenu>
+        <MenuName><Link href="/register">여행지 등록</Link></MenuName>
       </MenuContainer>
     </BodyContainer>
   </>
@@ -56,10 +57,9 @@ text-align:center;
 }
 `
 
-const RegisterMenu = styled.div`
-`
 
-const RecommendMenu = styled.div`
+const MenuName = styled.div`
+
 `
 const MenuLine = styled.div`
 width:200px;
