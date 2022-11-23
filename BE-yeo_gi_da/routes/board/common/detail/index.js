@@ -4,5 +4,4 @@ const boardController = require('../../../../controllers/board')
 
 router.get('/:board_id',  boardController.showDetail)
 
-
 module.exports = router

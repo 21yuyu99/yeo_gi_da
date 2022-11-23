@@ -7,6 +7,7 @@ function create(_name,_picture,_intro,_tip,_location,_region,_withWho,_transport
 
     return new Promise((resolve,reject)=>{
 
+
         
         models.category.create({
             region: _region,
@@ -39,7 +40,9 @@ function create(_name,_picture,_intro,_tip,_location,_region,_withWho,_transport
     })
 }
 
-function showDetail(_board_id) {
+function showDetail(_board_id) { // 1
+    
+
     return new Promise((resolve, reject) => {
         models.board.findOne({
             include : [
@@ -56,7 +59,11 @@ function showDetail(_board_id) {
                 successObj.boards = response.dataValues
                 return resolve(successObj)
             }
-            else return reject(message['404_NOT_FOUND'])
+
+            else{
+
+                return reject(message['404_NOT_FOUND'])
+            } 
         }).catch(error => {
             console.log(error)
             return reject(message['500_INTERNAL_SERVER_ERROR'])
@@ -82,15 +89,14 @@ function createComment(_board_id, _content){
 
 function getComment(_board_id){
     return new Promise((resolve, reject) => {
-        models.comment.findAll({
-            order: [['createdAt', 'DESC']],
+        models.comment.findOne({
             where: {
                 board_id: _board_id
             }
         }).then(response => {
             if (response != null){
                 var successObj = Object.assign({}, message['200_OK'])
-                successObj.comment = response
+                successObj.comment = response.dataValues
                 return resolve(successObj)
             }
             else return reject(message['404_NOT_FOUND'])
@@ -99,10 +105,43 @@ function getComment(_board_id){
         })
     })
 }
+function selectCate(_region,_withWho,_transportation,_scenery,_mood){ //req에는 카테고리 필드가 들어옴
+
+    
+    return new Promise((resolve, reject) =>{
+        models.category.findOne({
+            where:{
+                region: _region,
+                withWho: _withWho,
+                transportation: _transportation,
+                scenery: _scenery,
+                mood: _mood,
+            }
+        }).then(response => {
+            if (response != null){
+                
+                var successObj = Object.assign({}, message['200_OK'])
+                successObj.categories = response.dataValues
+                var board_id = (successObj.categories).id 
+                return resolve(showDetail(board_id)) // 객체 리턴
+            }
+            else {
+                return reject(message['404_NOT_FOUND'])
+            }
+        }).catch(error => {
+            return reject(message['500_INTERNAL_SERVER_ERROR'])
+        })
+    })
+
+}
+
+
 
 module.exports = {
     create,
     showDetail,
     createComment,
     getComment,
+    selectCate,
+
 }

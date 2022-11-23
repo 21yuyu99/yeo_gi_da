@@ -3,8 +3,9 @@ const message = require('../../../../utils/message')
 const boardController = require('../../../../controllers/board')
 
 
-
-
-router.post('/', boardController.create);
+router.post('/',boardController.selectCate)
 
 module.exports = router
+
+
+
