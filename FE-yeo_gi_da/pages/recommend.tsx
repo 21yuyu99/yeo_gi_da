@@ -1,11 +1,16 @@
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { useMutation } from "@tanstack/react-query";
+
 import styled from 'styled-components'
 import { AllCategoryConatainer, CategoryLabel, CategoryTitle, InputSubCategory, SingleCategoryContainer } from '../components/Category.style';
 import { moodContent, regionContent, rideContent, sceneryContent, whoContent } from '../components/categoryContent';
 import { checkType } from '../types/checkType';
 import GetRecommend from './api/GetRecommend';
+import { categoryType } from '../types/categoryType';
+import { Router, useRouter } from 'next/router';
 const Recommend = () => {
+  const router = useRouter();
   const [withWho, setWho] = useState<checkType[]>(whoContent);
 
   const [ride, setRide] = useState<checkType[]>(rideContent);
@@ -14,6 +19,7 @@ const Recommend = () => {
   const [mood, setMood] = useState<checkType[]>(moodContent);
 
   const [region, setRegion] = useState<checkType[]>(regionContent);
+  const [contentBox, setBox] = useState<categoryType[]>([]);
   const onCheckHandler = (state: {
     text: string;
     checked: boolean;
@@ -42,9 +48,10 @@ const Recommend = () => {
       }
       return "";
     }
-    const get = GetRecommend(findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
-    console.log(get);
+    const getrecommend = GetRecommend(findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
+   getrecommend.then(data => setBox(data));
   }
+
   return (
     <>
       <BackWrapper>
@@ -164,15 +171,29 @@ const Recommend = () => {
             </CategoryLabel>
           </SingleCategoryContainer>
         </AllCategoryConatainer>
-        <ApplyButton onClick={()=> handleRecommend()}>적용하기</ApplyButton>
+        <ApplyButton onClick={() => handleRecommend()}>적용하기</ApplyButton>
         <BoxContainer>
-          <SingleBox>
+          {/* <SingleBox>
             <Image alt="sunflower.jpg" src="/img/sunflower.jpg" width={200} height={180} />          <TextContainer>
               <SpotTitle>대부해양관광본부</SpotTitle>
               <Location>경기도 안산시 단원구 대부북동</Location>
               <Hashtag># 해바라기 핫 스팟</Hashtag>
             </TextContainer>
-          </SingleBox>
+          </SingleBox> */}
+          {contentBox.map(
+            x => {
+              return (
+                <SingleBox key={x.id} onClick={()=>router.push(`/detail/${x.id}`)}>
+                  {/* <Image alt="sunflower.jpg" src="/img/sunflower.jpg" width={200} height={180} /> */}
+                  <TextContainer>
+                    <SpotTitle>{x.title}</SpotTitle>
+                    <Location>{x.category}</Location>
+                    <Hashtag># 해바라기 핫 스팟</Hashtag>
+                  </TextContainer>
+                </SingleBox>
+              )
+            }
+          )}
 
         </BoxContainer>
 
