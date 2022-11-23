@@ -82,14 +82,15 @@ function createComment(_board_id, _content){
 
 function getComment(_board_id){
     return new Promise((resolve, reject) => {
-        models.comment.findOne({
+        models.comment.findAll({
+            order: [['createdAt', 'DESC']],
             where: {
                 board_id: _board_id
             }
         }).then(response => {
             if (response != null){
                 var successObj = Object.assign({}, message['200_OK'])
-                successObj.comment = response.dataValues
+                successObj.comment = response
                 return resolve(successObj)
             }
             else return reject(message['404_NOT_FOUND'])
