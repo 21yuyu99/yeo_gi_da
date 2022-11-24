@@ -20,10 +20,15 @@ module.exports = ((sequelize, DataTypes) => {
             type: Sequelize.TEXT,
             allowNull: false
         },
+        travel_hash:{
+            type: Sequelize.TEXT,
+            allownull : false
+        },
         travel_location: {
             type: Sequelize.TEXT,
-            allowNull: false
+            allowNull: false,
         }
+        
     }, {
         timestamps: true,
         paranoid: true,
