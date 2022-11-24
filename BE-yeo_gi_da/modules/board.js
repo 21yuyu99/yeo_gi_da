@@ -3,7 +3,7 @@ const { sequelize, Sequelize } = require('../models');
 const models = require('../models');
 const message = require('../utils/message');
 
-function create(_name,_picture,_intro,_tip,_location,_region,_withWho,_transportation,_scenery,_mood){
+function create(_name,_picture,_intro,_tip,_hash,_location,_region,_withWho,_transportation,_scenery,_mood){
 
     return new Promise((resolve,reject)=>{
 
@@ -22,6 +22,7 @@ function create(_name,_picture,_intro,_tip,_location,_region,_withWho,_transport
                     travel_picture: _picture,
                     travel_intro: _intro,
                     travel_tip: _tip,
+                    travel_hash: _hash,
                     travel_location: _location,
                     category_id : response.dataValues.id
                 }).then(response =>{
@@ -70,7 +71,6 @@ function showDetail(_board_id) { // 1
         })
     })
 }
-
 function createComment(_board_id, _content){
     return new Promise((resolve,reject)=>{
         models.comment.create({
@@ -109,7 +109,7 @@ function selectCate(_region,_withWho,_transportation,_scenery,_mood){ //reqì—ëŠ
 
     
     return new Promise((resolve, reject) =>{
-        models.category.findOne({
+        models.category.findAll({
             where:{
                 region: _region,
                 withWho: _withWho,
@@ -119,7 +119,7 @@ function selectCate(_region,_withWho,_transportation,_scenery,_mood){ //reqì—ëŠ
             }
         }).then(response => {
             if (response != null){
-                
+
                 var successObj = Object.assign({}, message['200_OK'])
                 successObj.categories = response.dataValues
                 var board_id = (successObj.categories).id 

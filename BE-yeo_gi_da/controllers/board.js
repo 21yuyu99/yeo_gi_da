@@ -19,7 +19,7 @@ function create(req,res,next){
     if (req.body.tip == null) return res.send(message['404_NOT_FOUND'])
     else if (typeof(req.body.tip) !== 'string') return res.send(message['404_BAD_REQUEST'])
 
-    showDetailModule.create(req.body.name,req.body.picture,req.body.intro,req.body.tip,req.body.location,req.body.region,req.body.withWho,req.body.transportation,req.body.scenery,req.body.mood).then(response => {
+    showDetailModule.create(req.body.name,req.body.picture,req.body.intro,req.body.tip,req.body.hash,req.body.location,req.body.region,req.body.withWho,req.body.transportation,req.body.scenery,req.body.mood).then(response => {
         return res.status(response.status).send(response)
     }).catch(error => {
 
@@ -80,6 +80,7 @@ function selectCate(req,res,next) { //req.body.region 등이 들어옴
         else return res.status(error.status).send(error)
     
     })
+    
 }
 
 
