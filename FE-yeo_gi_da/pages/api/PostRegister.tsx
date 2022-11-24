@@ -1,4 +1,4 @@
-export default function PostRegister(title:string,picture:string,explain:string,tip:string,location:string,region:string,
+export default function PostRegister(title:string,picture:string,explain:string,tip:string, tag:string, location:string,region:string,
 withWho:string,transportation:string,scenery:string,mood:string){
   fetch('http://127.0.0.1:3030/board/common/create',{
     method:'POST',
@@ -11,6 +11,7 @@ withWho:string,transportation:string,scenery:string,mood:string){
       picture : picture,
       intro : explain,
       tip : tip,
+      tag : tag,
       location : location,
       region : region,
       withWho : withWho,

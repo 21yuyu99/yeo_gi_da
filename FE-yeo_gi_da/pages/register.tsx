@@ -123,7 +123,7 @@ const Register = () => {
     }
     //PostRegister(title,allImage[0],explain,tip,location,findChecked(region),findChecked(withWho),findChecked(ride),findChecked(scenery),findChecked(mood));
     // PostRegister(formData);    
-    PostRegister(title, allImage[0].name, explain, tip, location, findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
+    PostRegister(title, allImage[0].name, explain, tip, allHashtag[0],location, findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
     router.push('/')
   }
   const router = useRouter();

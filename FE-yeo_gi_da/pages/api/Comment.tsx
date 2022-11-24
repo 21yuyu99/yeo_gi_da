@@ -17,7 +17,7 @@ export async function PostComment(id:number,content:string){
 }
 
 // export function GetComment(id:number){
-//   return useQuery<any>(['getCommment'],()=>
+//   return useQuery<any>([id],()=>
 //   fetch(`http://127.0.0.1:3030/board/common/comment/${id}`)
 //   .then(res=>res.json()),
 //   // {refetchOnMount:false,refetchOnWindowFocus:false} 

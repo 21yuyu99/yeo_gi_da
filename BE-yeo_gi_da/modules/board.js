@@ -7,14 +7,13 @@ function create(_name,_picture,_intro,_tip,_hash,_location,_region,_withWho,_tra
 
     return new Promise((resolve,reject)=>{
 
-
-        
         models.category.create({
             region: _region,
             withWho: _withWho,
             transportation: _transportation,
             scenery: _scenery,
             mood: _mood,
+
         }).then(response =>{
             if(response != null){
                 models.board.create({
@@ -28,7 +27,7 @@ function create(_name,_picture,_intro,_tip,_hash,_location,_region,_withWho,_tra
                 }).then(response =>{
                     return resolve(message['200_OK'])
                 }).catch(error => {
-                    return reject(message["500_INTERNAL_SERVER_ERROR"])
+                  return reject(message["500_INTERNAL_SERVER_ERROR"])
                 })
                 
             }
@@ -89,14 +88,15 @@ function createComment(_board_id, _content){
 
 function getComment(_board_id){
     return new Promise((resolve, reject) => {
-        models.comment.findOne({
+        models.comment.findAll({
+            order: [['createdAt','DESC']],
             where: {
                 board_id: _board_id
             }
         }).then(response => {
             if (response != null){
                 var successObj = Object.assign({}, message['200_OK'])
-                successObj.comment = response.dataValues
+                successObj.comment = response
                 return resolve(successObj)
             }
             else return reject(message['404_NOT_FOUND'])
@@ -108,8 +108,9 @@ function getComment(_board_id){
 function selectCate(_region,_withWho,_transportation,_scenery,_mood){ //req에는 카테고리 필드가 들어옴
 
     
+    
     return new Promise((resolve, reject) =>{
-        models.category.findAll({
+        models.category.findOne({
             where:{
                 region: _region,
                 withWho: _withWho,

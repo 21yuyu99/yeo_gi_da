@@ -6,52 +6,51 @@ import { MdOutlineModeComment } from "react-icons/md";
 import { useEffect, useState } from 'react';
 import { GetComment, PostComment } from "../api/Comment";
 import { commentType } from "../../types/commentType";
-import { detailType } from "../../types/detailType";
-export default function DetailPage() {
-  const [data,setData] = useState<detailType>({
-    id : 0,
-    travel_name : "",
-    travel_intro : "",
-    travel_tip :"",
-    travel_location : ""
-  });
+import { boardType } from "../../types/boardType";
+export default function DetailPage () {
+  // const [data,setData] = useState<boardType>({
+  //   id : 0,
+  //   travel_name : "",
+  //   travel_picture : "",
+  //   travel_intro : "",
+  //   travel_tip : "",
+  //   travel_hash: "",
+  //   travel_location : ""
+  // });
   const [comment, setComment] = useState("");
   const [allComment, setAllComment] = useState<commentType[]>([]);
   const router = useRouter();
   const contentId = Number(router.query.detail);
-  const detailData = GetDetail(2);
-  let getComment = GetComment(2);
-  useEffect(() => {
-    detailData.then(data => setData(data.boards));
-    getComment.then(data => setAllComment(data.comment));
-  },[]);
-
-  async function awaitComment(){
-    getComment = GetComment(2);
+  let getComment = GetComment(contentId);
+  // getComment.then(data => setAllComment(data.comment));
+  const detailData = GetDetail(contentId);
+  async function awaitComment() {
+    getComment = GetComment(contentId);
     getComment.then(data => setAllComment(data.comment));
   }
+  if (detailData.isLoading) return (<>loading...</>);
+  if (detailData.isError) return (<>Error</>);
+  if (detailData.isFetching)return(<>isFetching...</>);
   const CommentHandler = async () => {
-    await PostComment(2, comment);
-    setTimeout(async ()=> awaitComment(),1000);
+    await PostComment(contentId, comment);
+    setTimeout(async () => awaitComment(), 1000);
   }
-
-
   return (
     <>
       <AllContainer>
         <Line />
-        <Title>{data.travel_name}</Title>
+        <Title>{detailData.data.boards.travel_name}</Title>
         <SingleBox>
           <SubTitle>여행지 소개</SubTitle>
-          <SubContent>{data.travel_intro}</SubContent>
+          <SubContent>{detailData.data.boards.travel_intro}</SubContent>
         </SingleBox>
         <SingleBox>
           <SubTitle>여행지 주소</SubTitle>
-          <SubContent>{data.travel_location}</SubContent>
+          <SubContent>{detailData.data.boards.travel_location}</SubContent>
         </SingleBox>
         <SingleBox>
           <SubTitle>여행자가 추천하는 꿀팁!</SubTitle>
-          <SubContent>{data.travel_tip}</SubContent>
+          <SubContent>{detailData.data.boards.travel_tip}</SubContent>
         </SingleBox>
 
         <CommentContainer>
@@ -71,7 +70,6 @@ export default function DetailPage() {
                   </SingleCommentBox>
                   <CommentLine />
                 </>
-
               )
             }
           )}

@@ -7,9 +7,8 @@ import { AllCategoryConatainer, CategoryLabel, CategoryTitle, InputSubCategory, 
 import { moodContent, regionContent, rideContent, sceneryContent, whoContent } from '../components/categoryContent';
 import { checkType } from '../types/checkType';
 import GetRecommend from './api/GetRecommend';
-import { categoryType } from '../types/categoryType';
+import { boardType } from '../types/boardType';
 import { Router, useRouter } from 'next/router';
-import { GetComment } from './api/Comment';
 const Recommend = () => {
   const router = useRouter();
   const [withWho, setWho] = useState<checkType[]>(whoContent);
@@ -20,7 +19,17 @@ const Recommend = () => {
   const [mood, setMood] = useState<checkType[]>(moodContent);
 
   const [region, setRegion] = useState<checkType[]>(regionContent);
-  const [contentBox, setBox] = useState<categoryType[]>([]);
+  const [contentBox, setBox] = useState<boardType>({
+    id: 0,
+    travel_name: "",
+    travel_picture: "",
+    travel_intro: "",
+    travel_tip: "",
+    travel_hash: "",
+    travel_location: ""
+  }
+  );
+  const [existContent,setExist] = useState(true);
   const onCheckHandler = (state: {
     text: string;
     checked: boolean;
@@ -49,8 +58,9 @@ const Recommend = () => {
       }
       return "";
     }
-  const getrecommend = GetRecommend(findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
-   getrecommend.then(data => setBox(data));
+    const getrecommend = GetRecommend(findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
+    // getrecommend.then(data => setBox(data.boards));
+    getrecommend.then(data => data.status===200?setBox(data.boards):"");
   }
   return (
     <>
@@ -180,27 +190,35 @@ const Recommend = () => {
               <Hashtag># 해바라기 핫 스팟</Hashtag>
             </TextContainer>
           </SingleBox> */}
-          {contentBox.map(
-            x => {
-              return (
-                <SingleBox key={x.id} onClick={()=>router.push(`/detail/${x.id}`)}>
-                  {/* <Image alt="sunflower.jpg" src="/img/sunflower.jpg" width={200} height={180} /> */}
-                  <TextContainer>
-                    <SpotTitle>{x.title}</SpotTitle>
-                    <Location>{x.category}</Location>
-                    <Hashtag># 해바라기 핫 스팟</Hashtag>
-                  </TextContainer>
-                </SingleBox>
-              )
-            }
-          )}
-
+          {contentBox.travel_name===""?<>검색된 결과가 없습니다</>:
+          <SingleBox onClick={() => router.push(`/detail/${contentBox.id}`)}>
+            <TextContainer>
+              <SpotTitle>{contentBox.travel_name}</SpotTitle>
+              <Location>{contentBox.travel_location}</Location>
+              <Hashtag>{contentBox.travel_hash}</Hashtag>
+            </TextContainer>
+          </SingleBox>
+          }
         </BoxContainer>
 
       </MainContainer>
     </>
   )
 }
+// {contentBox.map(
+//   x => {
+//     return (
+//       <SingleBox key={x.id} onClick={() => router.push(`/detail/${x.id}`)}>
+//         {/* <Image alt="sunflower.jpg" src="/img/sunflower.jpg" width={200} height={180} /> */}
+//         <TextContainer>
+//           <SpotTitle>{x.travel_name}</SpotTitle>
+//           <Location>{x.travel_location}</Location>
+//           <Hashtag>{x.travel_hash}</Hashtag>
+//         </TextContainer>
+//       </SingleBox>
+//     )
+//   }
+// )}
 export default Recommend;
 const BackImage = styled.div`
 white-space : nowrap;
@@ -240,8 +258,7 @@ const SingleBox = styled.li`
 background-color: white;
 border-radius: .25em;
 display:flex;
-//width:350px;
-width:35%;
+width:11rem;
 margin-bottom:5%;
 `
 
