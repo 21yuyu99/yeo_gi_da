@@ -9,6 +9,7 @@ import { checkType } from '../types/checkType';
 import GetRecommend from './api/GetRecommend';
 import { categoryType } from '../types/categoryType';
 import { Router, useRouter } from 'next/router';
+import { GetComment } from './api/Comment';
 const Recommend = () => {
   const router = useRouter();
   const [withWho, setWho] = useState<checkType[]>(whoContent);
@@ -48,10 +49,9 @@ const Recommend = () => {
       }
       return "";
     }
-    const getrecommend = GetRecommend(findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
+  const getrecommend = GetRecommend(findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
    getrecommend.then(data => setBox(data));
   }
-
   return (
     <>
       <BackWrapper>
