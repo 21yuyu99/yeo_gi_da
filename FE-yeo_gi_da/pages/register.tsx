@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Router, useRouter } from 'next/router';
 import { ChangeEvent, Dispatch, ReactNode, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { CiCircleRemove } from 'react-icons/ci';
 import styled from 'styled-components'
@@ -123,7 +124,9 @@ const Register = () => {
     //PostRegister(title,allImage[0],explain,tip,location,findChecked(region),findChecked(withWho),findChecked(ride),findChecked(scenery),findChecked(mood));
     // PostRegister(formData);    
     PostRegister(title, allImage[0].name, explain, tip, location, findChecked(region), findChecked(withWho), findChecked(ride), findChecked(scenery), findChecked(mood));
+    router.push('/')
   }
+  const router = useRouter();
   return (
     <>
       <BackWrapper>
@@ -300,7 +303,8 @@ const Register = () => {
             <InputTag type="hashtag" value={singleTag} onKeyUp={e => keyUpHandler(e)} onChange={e => setSingleTag(e.target.value)} placeholder="태그를 입력하세요" />
           </AllTagBox>
         </SingleList>
-        <ApplyButton onClick={() => handleRegister()}><Link href="/">등록하기</Link></ApplyButton>
+        {/* <ApplyButton onClick={() => handleRegister()}><Link href="/">등록하기</Link></ApplyButton> */}
+        <ApplyButton onClick={() => handleRegister()}>등록하기</ApplyButton>
       </RegisterContainer>
     </>
   )

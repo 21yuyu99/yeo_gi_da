@@ -4,7 +4,9 @@ import styled from 'styled-components'
 import main_back_image from "../assets/images/main_back_image.jpg"
 import { Header } from '../components/layout/Header'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 export default function Home() {
+  const router = useRouter();
   return (
   <>
     <BackWrapper>
@@ -13,9 +15,9 @@ export default function Home() {
     <BodyContainer>
       <LetterText><p>너에게</p><p>특별한 여행지</p><p>우리가 찾아줄게</p></LetterText>
       <MenuContainer>
-        <MenuName><Link href="/recommend">여행지 추천받기</Link></MenuName>
+        <MenuName onClick={()=> router.push('/recommend')}>여행지 추천받기</MenuName>
         <MenuLine/>
-        <MenuName><Link href="/register">여행지 등록</Link></MenuName>
+        <MenuName onClick={()=> router.push('/register')}>여행지 등록</MenuName>
       </MenuContainer>
     </BodyContainer>
   </>

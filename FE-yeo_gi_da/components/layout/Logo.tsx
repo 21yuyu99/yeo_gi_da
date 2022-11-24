@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import Link from "next/link";
 import Image from 'next/image'
+import { useRouter } from "next/router";
 export const Logo = () => {
+  const router  = useRouter();
   return(
   <LogoContainer>
   <LogoBorder position="top"/>
   {/* <Image src="/img/topLeft.png" alt="" width={50} height={40}/> */}
-    <LogoTitle>
-      <Link href="/">여기다</Link>
+    <LogoTitle onClick={()=> router.push('/')}>
+      여기다
     </LogoTitle>
     <LogoBorder position="bottom"/>
   </LogoContainer>
